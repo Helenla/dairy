@@ -1,16 +1,17 @@
 <template>
   <div class="registered">
+      <i class="loginMsg"></i>
       <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="username">
+        <el-form-item label="用户名 :" prop="username">
             <el-input type="text" v-model="ruleForm2.username" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
+        <el-form-item label="密码 :" prop="pass">
             <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
+        <el-form-item label="确认密码 :" prop="checkPass">
             <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱 :" prop="email">
             <el-input type="email" v-model="ruleForm2.email" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item>
@@ -99,7 +100,7 @@ export default {
                     }
               })
           } else {
-            this.$toast('error submit!!');
+            this.$toast({message:'注册失败!!',position: 'bottom',duration:1000});
             return false;
           }
         });
@@ -110,12 +111,28 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
-    .el-form{
-        padding-top:150px; 
+<style lang="scss">
+    .registered{
+        height:100%;
+        background-image: url('../../images/bg15.jpg');
+        background-size:cover;
+    }
+    i.loginMsg{
+        position: absolute;
+        left:50%;
+        transform: translateX(-50%);
+        top:50px;
+        display: inline-block;
+        width: 130px;
+        height:130px;
+        background-image: url('../../images/人员信息.png');
+        background-size: cover;
+    }
+    .demo-ruleForm.el-form{
+        padding-top:200px; 
         text-align: center;
         .el-input{
-            width: 80%;
+            width: 60%;
         }
         .el-form-item__content{
             margin-left: 0px !important;
@@ -124,5 +141,14 @@ export default {
             left:50%;
             transform: translateX(-50%);
         }
+        .el-form-item__label{
+            font-weight: bolder;
+            font-size: 20;
+            color: #D4237A;
+        }
+        .el-button--primary{
+            background-color: #D4237A;
+        }
     }
+    
 </style>

@@ -7,6 +7,8 @@ import '../node_modules/mint-ui/lib/style.css'
 
 import ElementUI from 'element-ui'
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
+// 引入css动画库
+import './assets/animate.min.css'
 
 import App from './App'
 import router from './router/index'
@@ -20,6 +22,8 @@ import api from '@/api.js';//挂载api
 Vue.prototype.$api=api;
 
 Vue.config.productionTip = false
+
+
 
 /* eslint-disable no-new */
 new Vue({

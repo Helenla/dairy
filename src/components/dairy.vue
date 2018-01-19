@@ -1,69 +1,151 @@
 <template>
-    <div class="dairy">
-        <mt-header fixed title="mini日记">
-            <mt-button slot="left" icon="back" @click="clickBack()">退出</mt-button>
-            <mt-button icon="more" slot="right" @click="handleClick()"></mt-button>
-        </mt-header>
-        <!-- banner -->
-        <el-carousel :interval="5000" arrow="always">
-            <el-carousel-item v-for="item in 3" :key="item">
+    <div class="index">
+        <!-- 轮播图 -->
+        <el-carousel :interval="5000" arrow="always" class="banner">
+            <el-carousel-item>
+                <img src="../../images/bg06-1.jpg" alt="">
+            </el-carousel-item>
+            <el-carousel-item>
+                <img src="../../images/bg10-1.jpg" alt="">
+            </el-carousel-item>
+            <el-carousel-item>
+                <img src="../../images/每日一笑.jpg" alt="">
             </el-carousel-item>
         </el-carousel>
-        <!-- more -->
-        <mt-actionsheet
-            :actions="actions"
-            v-model="sheetVisible">
-        </mt-actionsheet>
-        <ul class="navs">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
+        <!-- 功能 -->
+        <div class="main">
+            <ul class="navs">
+                <li class="dairy">
+                    <img @click="goDairy()" src="../../images/笔记.png" alt="">
+                </li><!-- 
+                --><li class="node">
+                    <img @click="goNode()" src="../../images/书签.png" alt="">
+                </li><!-- 
+                --><li class="dairy">
+                    <img @click="goBook()" src="../../images/书.png" alt="">
+                </li><!-- 
+                --><li class="node">
+                    <img @click="goPerson()" src="../../images/个人中心.png" alt="">
+                </li>
+            </ul>            
+        </div>
     </div>
 
 </template>
 <script>
-import { MessageBox } from 'mint-ui';
+import { MessageBox, Toast } from 'mint-ui';
 export default {
     name:'dairy',
     data() {
         return {
-            actions: [{
-                    name: '拍照',
-                    method: () => {
-                        this.$toast({message:'拍照',duration:1000})
-                    }
-                },{
-                    name: '个人信息',
-                    method: () => {
-                        this.$router.push({path: './person'})
-                    }
-                },{
-                    name: '关于app',
-                    method: () => {
-                        this.$toast({message:'关于app',duration:1000})
-                    }
-                }
-            ],
-            sheetVisible:false
+            
         }
+    },
+    created(){
+        
     },
     methods:{
         clickBack() {
             MessageBox.confirm('确定执行此操作?').then(action => {
-                this.$router.push({path: './login'})
+                this.$router.push({path: '/login'})
             }).catch(e => {});
         },
         handleClick() {
             this.sheetVisible = true
+        },
+        goLogin() {
+            this.$router.push({path: '/login'})
+        },
+        goDairy() {
+            if(this.$store.state.token){
+                Toast({
+                    message: '欢迎进入日记本',
+                    position: 'bottom',
+                    duration: 1000
+                });
+                setTimeout(()=>{
+                    this.$router.push({path: '/showDairy'})
+                },1000)
+                
+            }else{
+                MessageBox.confirm('还未登陆无法打开，是否去登陆？').then(action => {
+                    this.$router.push({path: '/login'})
+                }).catch(() => {});
+            }
+        },
+        goBook() {
+            Toast({
+                message: '欢迎进入文摘',
+                position: 'bottom',
+                duration: 1000
+            });
+            setTimeout(()=>{
+                this.$router.push({path: '/book'})
+            },1000)            
+        },
+        goNode() {
+            Toast({
+                message: '欢迎进入便签',
+                position: 'bottom',
+                duration: 1000
+            });
+            setTimeout(()=>{
+                this.$router.push({path: '/node'})
+            },1000)
+        },
+        goPerson() {
+             if(this.$store.state.token){
+                Toast({
+                    message: '进入个人中心',
+                    position: 'bottom',
+                    duration: 1000
+                });
+                setTimeout(()=>{
+                    this.$router.push({path: '/person'})
+                },1000)
+            }else{
+                MessageBox.confirm('还未登陆无法打开，是否去登陆？').then(action => {
+                    this.$router.push({path: '/login'})
+                }).catch(() => {});
+            }           
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-    .el-carousel{
-        padding-top: 40px;
+    .index{
+        height: 100%;
+        background-image: url('../../images/bg07.jpg');
+        background-size:cover;
+    }
+    .banner{
+        .el-carousel__item{
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .navs{
+        height:140px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        li{
+            width: 80px;
+            height:80px;
+            background-color: #409EFF;
+            border-radius: 8px;
+            img{
+                width: 60px;
+                height: 60px;
+                padding:10px 10px;
+            }
+        }
     }
     .el-carousel__item h3 {
         color: #475669;

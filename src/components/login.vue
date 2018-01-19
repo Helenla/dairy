@@ -1,22 +1,18 @@
 <template>
   <div class="login">
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="用户名" prop="username">
+    <i class="loginImg"></i>
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-ruleForm">
+        <el-form-item label="用户名 :" prop="username">
             <el-input type="text" v-model="ruleForm.username" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
-            <el-input type="password" v-model="ruleForm.pass" auto-complete="off"></el-input>
+        <el-form-item label="密码 :" prop="password">
+            <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item>
-            <el-button @click="submitForm('ruleForm')">登陆</el-button>
+            <el-button type="primary" @click="submitUser()">登陆</el-button>
             <el-button @click="$router.push({ path: 'Registered' })">注册</el-button>
         </el-form-item>
         
-        <mt-swipe :auto="4000">
-            <mt-swipe-item>1</mt-swipe-item>
-            <mt-swipe-item>2</mt-swipe-item>
-            <mt-swipe-item>3</mt-swipe-item>
-        </mt-swipe>
     </el-form>
   </div>
 </template>
@@ -40,7 +36,7 @@ export default {
         return {
             ruleForm: {
                 username:'',
-                pass: ''
+                password: ''
             },
             rules: {
                 username:[
@@ -53,36 +49,47 @@ export default {
         }
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-                this.$api.checkUser({
-                    
-                }).then((res) => {
-                    this.$toast({message:'登陆成功!!',duration:1000});
-                    setTimeout(()=>{
-                        this.$router.push({path: '/index'});
-                    },1000)
-                })
-
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      submitUser() {
+            this.$api.checkUser({
+                username: this.ruleForm.username,
+                password: this.ruleForm.password
+            }).then((res) => {
+                console.log(res)
+                this.$toast({message:'登陆成功!!',position: 'bottom',duration:1000});
+                // sessionStorage.setItem('token', true)
+                this.$store.state.token = true;
+                setTimeout(()=>{
+                    this.$router.push({path: '/index'});
+                },1000)
+            }).catch(() => {
+                this.$toast({message:'登陆失败!!',position: 'bottom',duration:1000});
+            })
+        } 
       }
-    }
 }
 </script>
-<style lang="scss" scoped>
-    .el-form{
-        padding-top:200px; 
+<style lang="scss">
+    .login{
+        height:100%;
+        background-image: url('../../images/bg15.jpg');
+        background-size:cover;
+    }
+    i.loginImg{
+        position: absolute;
+        left:50%;
+        transform: translateX(-50%);
+        top:80px;
+        display: inline-block;
+        width: 100px;
+        height:100px;
+        background-image: url('../../images/登陆.png');
+        background-size: cover;
+    }
+    .el-form.login-ruleForm{
+        padding-top:230px; 
         text-align: center;
         .el-input{
-            width: 80%;
+            width: 60%;
         }
         .el-form-item__content{
             margin-left: 0px !important;
@@ -90,6 +97,14 @@ export default {
         .el-form-item__error{
             left:50%;
             transform: translateX(-50%);
+        }
+        .el-form-item__label{
+            font-weight: bolder;
+            font-size: 20;
+            color: #D4237A;
+        }
+        .el-button--primary{
+            background-color: #D4237A;
         }
     }
 </style>
