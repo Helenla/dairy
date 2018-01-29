@@ -26,23 +26,30 @@
                 </li><!-- 
                 --><li class="node">
                     <img @click="goPerson()" src="../../images/个人中心.png" alt="">
-                </li>
-            </ul>            
+                </li> 
+            </ul>
         </div>
+        <el-tag v-if="isHasUser" class="users">{{this.users}}</el-tag>
     </div>
 
 </template>
 <script>
 import { MessageBox, Toast } from 'mint-ui';
-export default {
-    name:'dairy',
+export default {  
+    name:'dairy', 
     data() {
         return {
-            
+            users:'',
+            isHasUser:false
         }
     },
     created(){
-        
+        // this.$message('这是一条消息提示');
+        this.users = sessionStorage.getItem('users');
+        if(this.users){
+            this.isHasUser = true;
+        }
+        // console.log(this.users)
     },
     methods:{
         clickBack() {
@@ -64,7 +71,7 @@ export default {
                     duration: 1000
                 });
                 setTimeout(()=>{
-                    this.$router.push({path: '/showDairy'})
+                    this.$router.push({path: '/dairy'})
                 },1000)
                 
             }else{
@@ -127,11 +134,15 @@ export default {
         }
     }
     .navs{
-        height:140px;
+
+        height:200px;
+        width: 200px;
         list-style: none;
-        margin: 0;
+        margin: 0 auto;
         padding: 0;
+        padding-top: 40px;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
@@ -161,5 +172,12 @@ export default {
     
     .el-carousel__item:nth-child(2n+1) {
         background-color: #d3dce6;
+    }
+    .users{
+        position: absolute;
+        top:310px;
+        left:50%;
+        transform: translateX(-50%);
+        z-index: 999;
     }
 </style>

@@ -10,26 +10,28 @@
             <ul>
                 <li class="lis">
                     <span class="tag">用户名</span>
-                    <span class="tag">lizhiyu</span>
+                    <i class="el-icon-caret-right"></i>
+                    <el-tag type="danger" size="">lizhiyu</el-tag>
                 </li>
                 <li class="lis">
                     <span class="tag">性别</span>
-                    <span class="tag">
-                        <el-radio v-model="radio" label="1">男</el-radio>
-                        <el-radio v-model="radio" label="2">女</el-radio>
-                    </span>
+                    <i class="el-icon-caret-right"></i>
+                    <el-tag>男</el-tag>
                 </li>
                 <li class="lis">
                     <span class="tag">生日</span>
-                    <span class="tag">2017-11-12</span>
+                    <i class="el-icon-caret-right"></i>
+                    <el-tag>2017-11-12</el-tag>
                 </li>
                 <li class="lis">
                     <span class="tag">爱好</span>
-                    <el-tag>篮球</el-tag>
+                    <i class="el-icon-caret-right"></i>
+                    <el-tag type="warning">篮球</el-tag>
                 </li>
                 <li class="lis">
                     <span class="tag">个性签名</span>
-                    <span class="txt">12312312312</span>
+                    <i class="el-icon-caret-right"></i>
+                    <el-tag type="info">2017-11-12日开始</el-tag>
                 </li>
             </ul>
             <mt-button type="danger" @click="outLogin()" size="large">退出登陆</mt-button>

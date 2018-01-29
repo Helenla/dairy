@@ -84,7 +84,6 @@ export default {
     },
     methods: {
       submitForm(formName) {
-          console.log('1')
         this.$refs[formName].validate((valid) => {
           if (valid) {
               this.$api.registered({

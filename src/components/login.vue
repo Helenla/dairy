@@ -50,13 +50,13 @@ export default {
     },
     methods: {
       submitUser() {
+            sessionStorage.setItem('users', this.ruleForm.username);// 把users存入sessionStorage
             this.$api.checkUser({
                 username: this.ruleForm.username,
                 password: this.ruleForm.password
             }).then((res) => {
                 console.log(res)
                 this.$toast({message:'登陆成功!!',position: 'bottom',duration:1000});
-                // sessionStorage.setItem('token', true)
                 this.$store.state.token = true;
                 setTimeout(()=>{
                     this.$router.push({path: '/index'});

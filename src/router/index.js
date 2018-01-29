@@ -1,12 +1,11 @@
 import Vue from 'vue'
-
 import Router from 'vue-router'
 
 import Login from '@/components/login'
 import Registered from '@/components/Registered'
-import index from '@/components/dairy'
+import index from '@/components/index'
 import person from '@/components/personMsg'
-import showDairy from '@/components/dairy/showDairy'
+import dairy from '@/components/dairy/dairy'
 import addDairy from '@/components/dairy/addDairy'
 import node from '@/components/node/node'
 import book from '@/components/book/book'
@@ -38,9 +37,9 @@ export default new Router({
       component: person
     },
     {
-      path: '/showDairy',
-      name: 'showDairy',
-      component: showDairy
+      path: '/dairy',
+      name: 'dairy',
+      component: dairy
     },
     {
       path: '/addDairy',
