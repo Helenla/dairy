@@ -36,6 +36,9 @@
             </ul>
             <mt-button type="danger" @click="outLogin()" size="large">退出登陆</mt-button>
         </div>
+        <div class="edit">
+            
+        </div>
     </div>
 </template>
 <script>

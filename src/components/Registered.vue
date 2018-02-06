@@ -93,6 +93,7 @@ export default {
               }).then((res) => {
                     if('1' == res.data){
                         this.$toast({message:'注册成功!!',duration:1000});
+                        sessionStorage.setItem('token', true);
                         setTimeout(()=>{
                             this.$router.push({path: '/index'});
                         },1000)

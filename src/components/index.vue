@@ -3,33 +3,35 @@
         <!-- 轮播图 -->
         <el-carousel :interval="5000" arrow="always" class="banner">
             <el-carousel-item>
-                <img src="../../images/bg06-1.jpg" alt="">
+                <img @click="goNews()" src="../../images/news.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../../images/bg10-1.jpg" alt="">
+                <img @click="goCommon()" src="../../images/常识.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img src="../../images/每日一笑.jpg" alt="">
+                <img @click="goJoke()" src="../../images/joke.jpg" alt="">
             </el-carousel-item>
         </el-carousel>
         <!-- 功能 -->
         <div class="main">
             <ul class="navs">
-                <li class="dairy">
+                <li class="dairy_logo">
                     <img @click="goDairy()" src="../../images/笔记.png" alt="">
                 </li><!-- 
-                --><li class="node">
+                --><li class="node_logo">
                     <img @click="goNode()" src="../../images/书签.png" alt="">
                 </li><!-- 
-                --><li class="dairy">
+                --><li class="dairy_logo">
                     <img @click="goBook()" src="../../images/书.png" alt="">
                 </li><!-- 
-                --><li class="node">
+                --><li class="node_logo">
                     <img @click="goPerson()" src="../../images/个人中心.png" alt="">
-                </li> 
+                    <!-- <img  @click="goPerson()" src="../../images/个人中心.png" alt="">
+                    <img @click="goPerson()" src="../../images/个人中心.png" alt=""> -->
+                </li>
             </ul>
         </div>
-        <el-tag v-if="isHasUser" class="users">{{this.users}}</el-tag>
+        <el-tag v-if="isHasUser" type="danger" class="users">{{this.users}}</el-tag>
     </div>
 
 </template>
@@ -40,7 +42,8 @@ export default {
     data() {
         return {
             users:'',
-            isHasUser:false
+            isHasUser:false,
+            time : new Date().toLocaleDateString(),
         }
     },
     created(){
@@ -49,6 +52,7 @@ export default {
         if(this.users){
             this.isHasUser = true;
         }
+        sessionStorage.setItem('date', this.time)
         // console.log(this.users)
     },
     methods:{
@@ -60,23 +64,33 @@ export default {
         handleClick() {
             this.sheetVisible = true
         },
+        // 以下跳转页面
+        goJoke() {
+            this.$router.push({path: '/joke'});
+        },
+        goNews() {
+            this.$router.push({path: '/news'});
+        },
+        goCommon() {
+            this.$router.push({path: '/common'});
+        },
         goLogin() {
-            this.$router.push({path: '/login'})
+            this.$router.push({path: '/login'});
         },
         goDairy() {
-            if(this.$store.state.token){
+            if(sessionStorage.getItem('token')){
                 Toast({
                     message: '欢迎进入日记本',
                     position: 'bottom',
                     duration: 1000
                 });
                 setTimeout(()=>{
-                    this.$router.push({path: '/dairy'})
+                    this.$router.push({path: '/dairy'});
                 },1000)
                 
             }else{
                 MessageBox.confirm('还未登陆无法打开，是否去登陆？').then(action => {
-                    this.$router.push({path: '/login'})
+                    this.$router.push({path: '/login'});
                 }).catch(() => {});
             }
         },
@@ -87,7 +101,7 @@ export default {
                 duration: 1000
             });
             setTimeout(()=>{
-                this.$router.push({path: '/book'})
+                this.$router.push({path: '/book'});
             },1000)            
         },
         goNode() {
@@ -97,22 +111,22 @@ export default {
                 duration: 1000
             });
             setTimeout(()=>{
-                this.$router.push({path: '/node'})
+                this.$router.push({path: '/node'});
             },1000)
         },
         goPerson() {
-             if(this.$store.state.token){
+             if(sessionStorage.getItem('token')){
                 Toast({
                     message: '进入个人中心',
                     position: 'bottom',
                     duration: 1000
                 });
                 setTimeout(()=>{
-                    this.$router.push({path: '/person'})
+                    this.$router.push({path: '/person'});
                 },1000)
             }else{
                 MessageBox.confirm('还未登陆无法打开，是否去登陆？').then(action => {
-                    this.$router.push({path: '/login'})
+                    this.$router.push({path: '/login'});
                 }).catch(() => {});
             }           
         }
@@ -175,7 +189,8 @@ export default {
     }
     .users{
         position: absolute;
-        top:310px;
+        // top:310px;
+        bottom: 80px;
         left:50%;
         transform: translateX(-50%);
         z-index: 999;

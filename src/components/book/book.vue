@@ -1,6 +1,6 @@
 <template>
     <div class="book">
-        <img class="book_bg" src="../../../images/book.jpg" alt="">
+        <img class="book_bg" src="../../../images/bg06.jpg" alt="">
         <i class="back" @click="backIndex()"></i>
         <span class="book_time">{{time}}</span>
         <div class="main">
@@ -28,7 +28,7 @@ export default {
     name: 'book',
     data() {
         return {
-            time : new Date().toLocaleDateString()
+            time : sessionStorage.getItem('date'),
         }
     },
     methods: {
@@ -44,10 +44,13 @@ export default {
     .book{
         position: absolute;
         top:0;left:0;
-        height:100%;width: 100%;
+        height:100%;
+        width: 100%;
         .book_bg{
             position: fixed;
-            top:-60px;left:-90px;
+            width: 100%;
+            background-size: 100%;
+            top:-60px;
             z-index: -1;
             height: 120%;
         }
@@ -69,6 +72,11 @@ export default {
             background-size: cover; 
         }
         .main_book{
+            // color:#C0C4CC;
+            margin:0px 20px;
+            border-radius: 10px;
+            // padding:10px;
+            font-family: "幼圆";
             h3{
                 margin:0px;
                 text-align: center;
@@ -76,12 +84,8 @@ export default {
             }
             p{
                 margin: 0;
+                padding-bottom: 40px;
             }
-            margin:0px 20px;
-            border-radius: 10px;
-            padding:10px;
-            color:black;
-            font-family: "幼圆";
         }
     }
 </style>

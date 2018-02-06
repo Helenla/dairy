@@ -57,7 +57,8 @@ export default {
             }).then((res) => {
                 console.log(res)
                 this.$toast({message:'登陆成功!!',position: 'bottom',duration:1000});
-                this.$store.state.token = true;
+                // this.$store.state.token = true;
+                sessionStorage.setItem('token', true);
                 setTimeout(()=>{
                     this.$router.push({path: '/index'});
                 },1000)

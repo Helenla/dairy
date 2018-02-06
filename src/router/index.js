@@ -6,9 +6,11 @@ import Registered from '@/components/Registered'
 import index from '@/components/index'
 import person from '@/components/personMsg'
 import dairy from '@/components/dairy/dairy'
-import addDairy from '@/components/dairy/addDairy'
 import node from '@/components/node/node'
 import book from '@/components/book/book'
+import joke from '@/components/OtherServices/joke'
+import news from '@/components/OtherServices/News'
+import common from '@/components/OtherServices/common'
 
 Vue.use(Router)
 
@@ -42,11 +44,6 @@ export default new Router({
       component: dairy
     },
     {
-      path: '/addDairy',
-      name: 'addDairy',
-      component: addDairy
-    },
-    {
       path: '/node',
       name: 'node',
       component: node
@@ -55,6 +52,21 @@ export default new Router({
       path: '/book',
       name: 'book',
       component: book
+    },
+    {
+      path: '/joke',
+      name: 'joke',
+      component: joke
+    },
+    {
+      path: '/common',
+      name: 'common',
+      component: common
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: news
     }
 
   ]
