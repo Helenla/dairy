@@ -71,7 +71,14 @@ export default {
         }).catch(() => {});
     },
     addNode() {
-        MessageBox.confirm('是否返回首页？').then(action => {
+        if(this.node == ''){
+            Toast({
+                message: '无便签内容 无法提交',
+                duration: 2000
+            });
+            return ;
+        }
+        MessageBox.confirm('确定添加？').then(action => {
             // 添加笔记接口
             
             this.isAdd = false;
@@ -79,7 +86,7 @@ export default {
         }).catch(() => {});
     },
     closeAdd() {
-        MessageBox.confirm('是否返回首页？').then(action => {
+        MessageBox.confirm('确定取消？').then(action => {
             this.isAdd = false;
             this.node = '';
         }).catch(() => {});

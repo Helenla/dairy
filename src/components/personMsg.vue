@@ -36,9 +36,22 @@
             </ul>
             <mt-button type="danger" @click="outLogin()" size="large">退出登陆</mt-button>
         </div>
-        <div class="edit">
-            
-        </div>
+        <el-dialog title="Dialog" :visible.sync="visible" width="80%">
+            <el-form ref="form" :model="form" label-width="60px">
+                <el-form-item label="用户名:">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item label="密码:">
+                    <el-input v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item label="爱好:">
+                    <el-input v-model="form.hobbits"></el-input>
+                </el-form-item>
+                <el-form-item label="签名:">
+                    <el-input v-model="form.word"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -47,20 +60,27 @@ export default {
   name:'person',
     data () {
         return {
-            radio: '1'
+            radio: '1',
+            visible: false,
+            form: {
+                name: '',
+                password: '',
+                hobbits: '',
+                word: '',
+            }
         };
     },
   methods:{
-      editMsg() {
-          
-      },
-      outLogin() {
-        MessageBox.confirm('是否要退出登陆？').then(action => {
-            this.$store.state.token = null;
-            this.$router.push({path: '/login'})
-        }).catch(() => {});
-      }
-  }
+        editMsg() {
+            this.visible = true;
+        },
+        outLogin() {
+            MessageBox.confirm('是否要退出登陆？').then(action => {
+                this.$store.state.token = null;
+                this.$router.push({path: '/login'})
+            }).catch(() => {});
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
