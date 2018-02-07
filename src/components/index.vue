@@ -9,7 +9,7 @@
                 <img @click="goCommon()" src="../../images/常识.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img @click="goJoke()" src="../../images/joke.jpg" alt="">
+                <img @click="goJoke()" src="../../images/笑话.jpg" alt="">
             </el-carousel-item>
         </el-carousel>
         <!-- 功能 -->

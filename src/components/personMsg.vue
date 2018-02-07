@@ -36,7 +36,7 @@
             </ul>
             <mt-button type="danger" @click="outLogin()" size="large">退出登陆</mt-button>
         </div>
-        <el-dialog title="Dialog" :visible.sync="visible" width="80%">
+        <el-dialog title="修改信息" :visible.sync="visible" width="80%">
             <el-form ref="form" :model="form" label-width="60px">
                 <el-form-item label="用户名:">
                     <el-input v-model="form.name"></el-input>

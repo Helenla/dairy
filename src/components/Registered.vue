@@ -5,8 +5,8 @@
         <el-form-item label="用户名 :" prop="username">
             <el-input type="text" v-model="ruleForm2.username" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码 :" prop="pass">
-            <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
+        <el-form-item label="密码 :" prop="password">
+            <el-input type="password" v-model="ruleForm2.password" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="确认密码 :" prop="checkPass">
             <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
@@ -45,7 +45,7 @@ export default {
         var validatePass2 = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'));
-            } else if (value !== this.ruleForm2.pass) {
+            } else if (value !== this.ruleForm2.password) {
                 callback(new Error('两次输入密码不一致!'));
             } else {
                 callback();
@@ -62,7 +62,7 @@ export default {
         return {
             ruleForm2: {
                 username:'',
-                pass: '',
+                password: '',
                 checkPass: '',
                 email:''
             },
@@ -70,7 +70,7 @@ export default {
                 username:[
                     { validator: validateName, trigger: 'blur' }
                 ],
-                pass: [
+                password: [
                     { validator: validatePass, trigger: 'blur' }
                 ],
                 checkPass: [
@@ -86,21 +86,25 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              this.$api.registered({
-                  username: this.ruleForm2.username,
-                  pass: this.ruleForm2.pass,
-                  email: this.ruleForm2.email,
-              }).then((res) => {
-                    if('1' == res.data){
-                        this.$toast({message:'注册成功!!',duration:1000});
-                        sessionStorage.setItem('token', true);
-                        setTimeout(()=>{
-                            this.$router.push({path: '/index'});
-                        },1000)
-                    }
-              })
+            this.$api.registered({
+                username: this.ruleForm2.username,
+                password: this.ruleForm2.password,
+                email: this.ruleForm2.email,
+            }).then((res) => {
+                console.log(res)
+                if('1' == res.data){
+                    this.$toast({message:'注册成功!!',duration:1000});
+                    sessionStorage.setItem('token', true);
+                    setTimeout(()=>{
+                        this.$router.push({path: '/index'});
+                    },1000)
+                } else {
+                    this.$toast({message:'注册失败!!',position: 'bottom',duration:1000});
+                    return false;
+                }
+            })
           } else {
-            this.$toast({message:'注册失败!!',position: 'bottom',duration:1000});
+            console.log('error submit!!');
             return false;
           }
         });

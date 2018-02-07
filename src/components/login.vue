@@ -56,14 +56,20 @@ export default {
                 password: this.ruleForm.password
             }).then((res) => {
                 console.log(res)
-                this.$toast({message:'登陆成功!!',position: 'bottom',duration:1000});
-                // this.$store.state.token = true;
-                sessionStorage.setItem('token', true);
-                setTimeout(()=>{
-                    this.$router.push({path: '/index'});
-                },1000)
+                if(res.data == []){
+                    this.$toast({message:'登陆失败!!',position: 'bottom',duration:1000});
+                    return ;
+                } else {
+                    this.$toast({message:'登陆成功!!',position: 'bottom',duration:1000});
+                    // this.$store.state.token = true;
+                    sessionStorage.setItem('token', true);
+                    setTimeout(()=>{
+                        this.$router.push({path: '/index'});
+                    },1000)
+                }
             }).catch(() => {
                 this.$toast({message:'登陆失败!!',position: 'bottom',duration:1000});
+                return ;
             })
         } 
       }
