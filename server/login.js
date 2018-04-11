@@ -2,6 +2,7 @@ var querystring=require('querystring');
 var MongoClient=require('mongodb').MongoClient;
 var DB_STR="mongodb://localhost:27017/minidairy"
 var login={
+    // 注册
     add:function(req,res){
         var qStr='';
         req.addListener('data',function(dataPart){
@@ -18,6 +19,7 @@ var login={
             })
         })
     },
+    // 登陆
     get:function(req,res){
         var qStr='';
         req.addListener('data',function(dataPart){

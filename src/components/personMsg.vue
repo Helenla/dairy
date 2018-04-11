@@ -11,7 +11,7 @@
                 <li class="lis">
                     <span class="tag">用户名</span>
                     <i class="el-icon-caret-right"></i>
-                    <el-tag type="danger" size="">lizhiyu</el-tag>
+                    <el-tag type="danger" size="">chenlianggao</el-tag>
                 </li>
                 <li class="lis">
                     <span class="tag">性别</span>

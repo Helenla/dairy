@@ -2,27 +2,15 @@
     <div style="width:100%;height:100%;">
         <div class="dairy">
             <img class="dairy_bg" src="../../../images/bg01.jpg" alt="">
+            <div ></div>
             <i class="back" @click="backIndex()"></i>
             <i class="add" @click="isAdd = true, minidairy = '', title = ''"></i>
             <div class="dairy_main">
                 <ul>
-                    <li>
-                        <h4>title</h4>
-                        <p>afusihfauihefluahweufhaliwuehfawuiehfiauwhefuwahff
-                        aefhauwehfuahfluhailuwehfuiawuhef</p>
-                        <h5>2018/11/11</h5>
-                    </li>
-                    <li>
-                        <h4>title</h4>
-                        <p>afusihfauihefluahweufhaliwuehfawuiehfiauwhefuwahff
-                        aefhauwehfuahfluhailuwehfuiawuhef</p>
-                        <h5>2018/11/10</h5>
-                    </li>
-                    <li>
-                        <h4>title</h4>
-                        <p>afusihfauihefluahweufhaliwuehfawuiehfiauwhefuwahff
-                        aefhauwehfuahfluhailuwehfuiawuhef</p>
-                        <h5>2018/11/9</h5>
+                    <li v-for="showDairy in this.allLists">
+                        <h4>{{showDairy.title}}</h4>
+                        <p>{{showDairy.dairy}}</p>
+                        <h5>{{showDairy.time}}</h5>
                     </li>
                 </ul>
             </div>
@@ -49,7 +37,18 @@ export default {
                 isAdd: false,
                 minidairy: '',
                 title: '',
+                date:'',// 时间
+                name:'',// 用户名
+                allLists:'',
+                showDairy:'',
+                num:0
             }
+    },
+    created() {
+        this.name = sessionStorage.getItem('users');
+        this.date = sessionStorage.getItem('date');
+        console.log(this.name);
+        this.getData();
     },
     methods: {
         backIndex() {
@@ -67,14 +66,47 @@ export default {
                     return;
                 }
                 // 添加日记接口
-
-                this.isAdd = false;
+                console.log(this.minidairy);
+                console.log(this.title);
+                this.num++;// 计算总数
+                console.log(this.num);
+                this.$api.addDairy({
+                    username: this.name,
+                    title: this.title,
+                    dairy: this.minidairy,
+                    time: this.date,
+                    lis: this.num
+                }).then(res => {
+                    console.log(res);
+                    if('1'== res.data){
+                        Toast({
+                            message:'添加成功!',
+                            duration:1000
+                        })
+                        this.getData();
+                        this.isAdd = false; // 关闭输入框
+                    }
+                })
             }).catch(() => {});
+        },
+        deleteDairy() {
+            MessageBox.confirm('是否确定添加？').then(action => {
+                
+            }).catch();
         },
         closeAdd() {
             MessageBox.confirm('是否退出添加？').then(action => {
                 this.isAdd = false;
             }).catch(() => {});
+        },
+        getData() {
+            this.$api.getDairy({
+                username: this.name,
+            }).then(res => {
+                console.log(res);
+                this.allLists = res.data;
+                this.num = this.allLists.length;
+            }).catch({});
         }
     }
 }  

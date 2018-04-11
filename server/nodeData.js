@@ -1,6 +1,6 @@
 var querystring=require('querystring');
 var MongoClient=require('mongodb').MongoClient;
-var DB_STR="mongodb://localhost:27017/login-data"
+var DB_STR="mongodb://localhost:27017/minidairy"
 var node={
     add:function(req,res){
         console.log('添加...')

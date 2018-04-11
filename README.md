@@ -21,11 +21,6 @@ npm run build --report
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
-# mongoDB
-
-users: 用户名
-
-node: 笔记内容
-
 # node 
 > node app.js
+

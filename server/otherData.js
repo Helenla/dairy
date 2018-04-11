@@ -88,4 +88,4 @@ var dairy={
         })
     }
 }
-module.exports=other;
+module.exports=dairy;

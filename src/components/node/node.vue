@@ -80,7 +80,6 @@ export default {
         }
         MessageBox.confirm('确定添加？').then(action => {
             // 添加笔记接口
-            
             this.isAdd = false;
             this.node = '';
         }).catch(() => {});

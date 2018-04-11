@@ -12,7 +12,6 @@
             <el-button type="primary" @click="submitUser()">登陆</el-button>
             <el-button @click="$router.push({ path: 'Registered' })">注册</el-button>
         </el-form-item>
-        
     </el-form>
   </div>
 </template>

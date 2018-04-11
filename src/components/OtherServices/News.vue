@@ -21,12 +21,12 @@
 </template>
 <script>
 export default {
-  name: 'news',
-  methods: {
-      goBack() {
-          this.$router.push({path: '/index'});
-      }
-  }
+    name: 'news',
+    methods: {
+        goBack() {
+            this.$router.push({path: '/index'});
+        }
+    }
 }
 </script>
 <style lang="scss">

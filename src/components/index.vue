@@ -9,7 +9,7 @@
                 <img @click="goCommon()" src="../../images/常识.jpg" alt="">
             </el-carousel-item>
             <el-carousel-item>
-                <img @click="goJoke()" src="../../images/笑话.jpg" alt="">
+                <img @click="goJoke()" src="../../images/joke02.jpg" alt="">
             </el-carousel-item>
         </el-carousel>
         <!-- 功能 -->
@@ -32,6 +32,8 @@
             </ul>
         </div>
         <el-tag v-if="isHasUser" type="danger" class="users">{{this.users}}</el-tag>
+         <iframe class="weather" scrolling="no" height="60" frameborder="0" allowtransparency="true" 
+         src="http://i.tianqi.com/index.php?c=code&id=12&color=%23002060&bgc=%23&bdc=%23&icon=3&num=5&site=12"></iframe>
     </div>
 
 </template>
@@ -148,7 +150,6 @@ export default {
         }
     }
     .navs{
-
         height:200px;
         width: 200px;
         list-style: none;
@@ -190,9 +191,18 @@ export default {
     .users{
         position: absolute;
         // top:310px;
-        bottom: 80px;
+        bottom: 95px;
         left:50%;
         transform: translateX(-50%);
         z-index: 999;
+    }
+    .weather{
+        position:absolute;
+        overflow: hidden;
+        bottom: 0;
+        width: 100%;
+        background: -webkit-linear-gradient(
+            top,white,lightblue,skyblue
+        );
     }
 </style>
