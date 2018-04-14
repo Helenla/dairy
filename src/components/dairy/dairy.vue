@@ -7,7 +7,8 @@
             <i class="add" @click="isAdd = true, minidairy = '', title = ''"></i>
             <div class="dairy_main">
                 <ul>
-                    <li v-for="showDairy in this.allLists">
+                    <li v-for="showDairy in allLists" :key="showDairy.title">
+                        <el-button class="delbtn" @click="deleteDairy(showDairy.lis)" type="danger" icon="el-icon-delete" circle></el-button>
                         <h4>{{showDairy.title}}</h4>
                         <p>{{showDairy.dairy}}</p>
                         <h5>{{showDairy.time}}</h5>
@@ -21,8 +22,8 @@
                 <el-input v-model="title" placeholder="输入日记名称"></el-input>
                 <textarea class="text" name="mini_dairy" cols="30" rows="10" v-model="minidairy"></textarea>
                 <div>
-                    <el-button type="danger" @click="closeAdd()">取消</el-button>
-                    <el-button type="primary" @click="addDairy()">添加</el-button>                    
+                    <el-button type="primary" @click="addDairy()">添加</el-button>    
+                    <el-button type="danger" @click="closeAdd()">取消</el-button>                
                 </div>
             </div>
         </div>
@@ -89,9 +90,18 @@ export default {
                 })
             }).catch(() => {});
         },
-        deleteDairy() {
-            MessageBox.confirm('是否确定添加？').then(action => {
-                
+        deleteDairy(numlis) {
+            MessageBox.confirm('是否删除？').then(action => {
+                this.$api.delDairy({lis: numlis}).then(res => {
+                    console.log(res);
+                    if('1' == res.data){
+                        Toast({
+                            message:'删除成功!',
+                            duration:1000
+                        })
+                        this.getData();
+                    }
+                })
             }).catch();
         },
         closeAdd() {
@@ -104,7 +114,7 @@ export default {
                 username: this.name,
             }).then(res => {
                 console.log(res);
-                this.allLists = res.data;
+                this.allLists = res.data.data;
                 this.num = this.allLists.length;
             }).catch({});
         }
@@ -117,26 +127,28 @@ export default {
         top:0;left:0;
         height: 100%;
         width: 100%;
-        // z-index: -1;
+        min-height: 812px;
         .dairy_bg{
             width: 100%;
             height: 100%;
             position: fixed;
             top:0;
             z-index: -999;
-        }
-        i{
+        }   
+        .back{
             position: absolute;
             display: inline-block;
             width: 40px;
-            height: 40px;           
-        }
-        .back{
+            height: 40px;     
             top:10px;left:10px;
             background-image: url('../../../images/返回.png');
             background-size: cover;
         }
         .add{
+            position: absolute;
+            display: inline-block;
+            width: 40px;
+            height: 40px;     
             top:10px;right:10px;
             background-image: url('../../../images/增加.png');
             background-size: cover;
@@ -158,17 +170,28 @@ export default {
                     h4{
                         margin: 0;
                         text-align: center;
+                        padding-bottom: 10px;
                     }
                     h5{
                         margin: 0;
                         text-align: right;
+                        padding-top: 5px;
                     }
                     p{
                         margin: 0;
+                        display: inline-block;
+                        min-width: 100%;
+                        min-height: 200px;
+                        border-radius: 5px;
+                        background: #eee;
                     }
                 }
             }
         }
+    }
+    .delbtn{
+        padding: 5px 10px;
+        margin-left: 225px;
     }
     .addDairy{
         z-index: 99;

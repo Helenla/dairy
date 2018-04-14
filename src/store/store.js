@@ -7,5 +7,6 @@ export default new Vuex.Store({
     state: {
         username: '',
         token: null,
+        nums: 0
     },
 })

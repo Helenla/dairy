@@ -18,6 +18,7 @@ app.post('/login/add',function(req,res){
                 if(err){console.log(err);res.end(err);db.close();return;}
                 db.collection('users').insert(qStr);
                     res.write('1');
+                    res.send();
                     res.end();
                     db.close();
             })

@@ -39,6 +39,24 @@ var dairy={
                 })
             })
         })
-    }
+    },
+    del:function(req,res){
+		var qStr='';
+        req.addListener('data',function(dataPart){
+            qStr = JSON.parse(dataPart);
+            console.log('qstr:'+qStr);
+        });
+        req.addListener('end',function(){
+            // qStr=querystring.parse(qStr)
+            MongoClient.connect(DB_STR,function(err,db){
+                if(err){console.log(err);res.end(err);db.close();return;}
+                console.log(qStr);
+                db.collection('dairy').remove(qStr)
+                    res.write('1')
+                    res.end();
+                    db.close()
+            })
+        })
+	},
 }
 module.exports=dairy;

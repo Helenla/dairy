@@ -107,14 +107,21 @@ export default {
             },1000)            
         },
         goNode() {
-            Toast({
-                message: '欢迎进入便签',
-                position: 'bottom',
-                duration: 1000
-            });
-            setTimeout(()=>{
-                this.$router.push({path: '/node'});
-            },1000)
+            if(sessionStorage.getItem('token')){
+                Toast({
+                    message: '欢迎进入便签',
+                    position: 'bottom',
+                    duration: 1000
+                });
+                setTimeout(()=>{
+                    this.$router.push({path: '/node'});
+                },1000)
+                
+            }else{
+                MessageBox.confirm('还未登陆无法打开，是否去登陆？').then(action => {
+                    this.$router.push({path: '/login'});
+                }).catch(() => {});
+            }
         },
         goPerson() {
              if(sessionStorage.getItem('token')){

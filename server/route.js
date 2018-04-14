@@ -1,7 +1,8 @@
 var login=require('./login.js');
 var node=require('./nodeData.js');
-// var other=require('./otherData.js');
+var other=require('./otherData.js');
 var dairy=require('./dairyData.js');
+var person=require('./personData.js')
 function route(req,res){
     var reg=/^\/(\w+)\/(\w+)/;
     var result=req.url.match(reg);
@@ -17,9 +18,12 @@ function route(req,res){
         case 'dairy':
             dairy[result[2]](req,res);
             break;
-        // case 'other':
-        //     node[result[2]](req,res);
-        //     break;
+        case 'person':
+            person[result[2]](req,res);
+            break;
+        case 'other':
+            other[result[2]](req,res);
+            break;
         default:break;
     }
 }

@@ -2,7 +2,7 @@
     <div style="width:100%;height:100%;">
         <div class="addNode" v-show="isAdd">
             <div class="bg">
-                <textarea class="text" cols="30" rows="10" v-model="node" placeholder="输入便签内容..."></textarea>
+                <textarea class="text" cols="30" rows="10" v-model="newNode" placeholder="输入便签内容..."></textarea>
                 <div>
                     <el-button type="danger" @click="closeAdd()">取消</el-button>
                     <el-button type="primary" @click="addNode()">添加</el-button>                    
@@ -13,40 +13,12 @@
             <img class="bg" src="../../../images/bg17.jpg" alt="">
             <i class="back" @click="backIndex()"></i>
             <i class="add" @click="isAdd = true"></i>
-            <span class="todoTime">{{time}}</span>
+            <span class="todoTime">{{date}}</span>
             <div class="node_main">
                 <ul>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利今夜吃鸡大吉大利今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
-                    </li>
-                    <li>
-                        <span>今夜吃鸡大吉大利</span>
-                        <h5>14:23</h5>
+                    <li v-for="item in items" :key="item.node">
+                        <span>{{item.node}}</span>
+                        <h5>{{item.time}}</h5>
                     </li>
                 </ul>
             </div>
@@ -59,35 +31,74 @@ export default {
   name: 'node',
   data() {
       return {
-          time: sessionStorage.getItem('date'),
+          name: sessionStorage.getItem('users'),
+          date: sessionStorage.getItem('date'),
+          time: '',
           isAdd: false,
-          node: ''
+          items: '',
+          item: '',
+          newNode: '',
+          nums: 0
       }
   },
+  created() {
+    this.getNode();
+    // sessionStorage.setItem('num', 0);
+    console.log(document.cookies);
+    var localDate = new Date();
+    this.time = localDate.getHours()+':'+localDate.getMinutes();
+  },
   methods: {
+    getNode() {
+        this.$api.getNodeMsg({
+            username: this.name,
+            date: this.date
+        }).then(res => {
+            console.log(res);
+            this.items = res.data.data;
+        })
+    },
     backIndex() {
         MessageBox.confirm('是否返回首页？').then(action => {
             this.$router.push({path: '/index'})
         }).catch(() => {});
     },
     addNode() {
-        if(this.node == ''){
+        if(this.newNode == ''){
             Toast({
                 message: '无便签内容 无法提交',
-                duration: 2000
+                duration: 1000
             });
             return ;
         }
         MessageBox.confirm('确定添加？').then(action => {
             // 添加笔记接口
-            this.isAdd = false;
-            this.node = '';
+            this.nums++;
+            // document.cookie = this.nums++ // 存储cookies
+            this.$api.addNodeMsg({
+                username: this.name,
+                node: this.newNode,
+                time: this.time,
+                lis: this.nums,
+                date: this.date
+            }).then(res => {
+                console.log(res)
+                if('1' == res.data){
+                    Toast({
+                        message: '添加成功',
+                        duration: 1000
+                    });
+                    this.getNode();
+                    this.isAdd = false;
+                    this.newNode = '';
+                }
+            })
         }).catch(() => {});
     },
     closeAdd() {
         MessageBox.confirm('确定取消？').then(action => {
             this.isAdd = false;
-            this.node = '';
+            this.newNode = '';
         }).catch(() => {});
     }
   }
@@ -146,7 +157,7 @@ export default {
                 align-items: flex-start;
                 li{
                     position: relative;
-                    width: 60px;
+                    width: 200px;
                     background: #409EFF;
                     color:white;
                     padding: 5px;
@@ -156,11 +167,15 @@ export default {
                     // 文字自动换行
                     word-break: break-all;
                     word-wrap : break-word ;
+                    min-height: 100px;
                     h5{
                         border-top: 1px solid white;
                         color: #E6A23C;
                         margin: 0;
                         text-align: right;
+                        position: absolute;
+                        bottom: 0;
+                        width: 95%;
                     }
                 }
             }

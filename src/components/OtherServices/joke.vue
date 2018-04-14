@@ -8,7 +8,7 @@
             <p>
                 乌龟正在河里洗澡被癞蛤蟆看见了，<br>
             　　乌龟：没见过像我这样的美女吗？看你眼珠子都快要蹦出来了。<br>
-            　　癞蛤蟆：妹，你就别逗我了，没有看见我身上已经起鸡皮疙瘩了吗？                
+            　　癞蛤蟆：妹，你就别逗我了，没有看见我身上已经起鸡皮疙瘩了吗？
             </p>
         </div>
     </div>
@@ -16,6 +16,17 @@
 <script>
 export default {
   name: 'joke',
+  data() {
+      return {
+          items: '',
+          item: ''
+      }
+  },
+  created() {
+      this.$api.getJoke().then(res => {
+          console.log(res)
+      })
+  },
   methods: {
       goBack() {
           this.$router.push({path: '/index'});

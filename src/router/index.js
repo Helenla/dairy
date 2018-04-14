@@ -14,10 +14,12 @@ import common from '@/components/OtherServices/common'
 
 Vue.use(Router)
 
-
-
 export default new Router({
   routes: [
+    {
+      path: '/',
+      redirect: '/index'
+    },
     {
       path: '/login',
       name: 'login',
