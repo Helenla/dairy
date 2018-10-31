@@ -1,5 +1,7 @@
 # mini
 
+### 毕设
+
 > A Vue.js project
 
 ## Build Setup
